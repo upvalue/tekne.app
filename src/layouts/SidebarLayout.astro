@@ -1,0 +1,40 @@
+---
+import "../styles/global.css";
+import SidebarLink from "../components/SidebarLink.astro";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Tekne" } = Astro.props as Props;
+---
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <slot name="head" />
+  </head>
+  <body class="min-h-screen bg-black text-gray-100">
+    <div class="flex min-h-screen">
+      <aside class="w-[300px] bg-black shrink-0">
+        <div class="p-8">
+          <h1 class="text-4xl font-bold text-emerald-400 mb-10">tekne</h1>
+          <nav>
+            <SidebarLink href="#">guide</SidebarLink>
+            <SidebarLink href="#">devlog</SidebarLink>
+            <SidebarLink href="#">demo</SidebarLink>
+            <SidebarLink href="#">github</SidebarLink>
+          </nav>
+        </div>
+        <slot name="sidebar" />
+      </aside>
+      <main class="flex-1 min-w-0 p-8 bg-black">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>

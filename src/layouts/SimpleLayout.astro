@@ -1,0 +1,30 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Tekne" } = Astro.props as Props;
+---
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <slot name="head" />
+  </head>
+  <body class="min-h-screen bg-black text-gray-100">
+    <div class="min-h-screen flex flex-col">
+      <header class="p-8">
+        <h1 class="text-4xl font-bold text-emerald-400">tekne</h1>
+      </header>
+      <main class="flex-1 p-8">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
