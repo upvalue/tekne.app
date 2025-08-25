@@ -1,11 +1,14 @@
 ---
 interface Props {
   href: string;
+  class?: string;
 }
 
-const { href } = Astro.props as Props;
+const { href, class: className } = Astro.props as Props;
+const baseClasses = "block text-2xl text-gray-300 hover:text-emerald-400 transition-colors duration-200";
+const finalClasses = className ? `${baseClasses} ${className}` : baseClasses;
 ---
 
-<a href={href} class="block text-2xl text-gray-300 hover:text-emerald-400 transition-colors duration-200">
+<a href={href} class={finalClasses}>
   <slot />
 </a>

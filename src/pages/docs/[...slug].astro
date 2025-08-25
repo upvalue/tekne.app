@@ -1,0 +1,36 @@
+---
+import SidebarLayout from "../../layouts/SidebarLayout.astro";
+import fs from "fs";
+import path from "path";
+
+export async function getStaticPaths() {
+  const docsDir = path.join(process.cwd(), "src/docs");
+  const files = fs.readdirSync(docsDir).filter(file => 
+    file.endsWith('.mdx')
+  );
+  
+  return files.map(file => ({
+    params: { slug: file.replace('.mdx', '') }
+  }));
+}
+
+const { slug } = Astro.params;
+
+// Import the actual MDX file dynamically from src/docs
+let Content;
+let frontmatter = {};
+
+try {
+  const module = await import(/* @vite-ignore */ `../../docs/${slug}.mdx`);
+  Content = module.default;
+  frontmatter = module.frontmatter || {};
+} catch (error) {
+  return new Response('Page not found', { status: 404 });
+}
+
+const title = frontmatter.title ? `${frontmatter.title} - Tekne` : "Tekne";
+---
+
+<SidebarLayout title={title}>
+  <Content />
+</SidebarLayout>

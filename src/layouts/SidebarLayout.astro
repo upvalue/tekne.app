@@ -7,6 +7,12 @@ interface Props {
 }
 
 const { title = "Tekne" } = Astro.props as Props;
+
+// Define docs navigation items
+const docsNavItems = [
+  { href: "/docs/about", title: "About" },
+  { href: "/docs/development", title: "Development" },
+];
 ---
 <!doctype html>
 <html lang="en" class="dark">
@@ -24,15 +30,19 @@ const { title = "Tekne" } = Astro.props as Props;
         <div class="p-8">
           <h1 class="text-4xl font-bold text-emerald-400 mb-10">tekne</h1>
           <nav>
-            <SidebarLink href="#">guide</SidebarLink>
-            <SidebarLink href="#">devlog</SidebarLink>
-            <SidebarLink href="#">demo</SidebarLink>
-            <SidebarLink href="#">github</SidebarLink>
+            {docsNavItems.map(item => (
+              <SidebarLink 
+                href={item.href}
+                class={Astro.url.pathname === item.href ? 'text-emerald-400' : ''}
+              >
+                {item.title}
+              </SidebarLink>
+            ))}
           </nav>
         </div>
         <slot name="sidebar" />
       </aside>
-      <main class="flex-1 min-w-0 p-8 bg-black">
+      <main class="flex-1 min-w-0 p-8 bg-black prose prose-invert">
         <slot />
       </main>
     </div>
