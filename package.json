@@ -10,10 +10,16 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.4",
+    "@astrojs/preact": "^4.1.0",
     "@astrojs/vercel": "^8.2.5",
+    "@fontsource/iosevka": "^5.2.5",
+    "@fontsource/mona-sans": "^5.2.6",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.11",
+    "@types/three": "^0.179.0",
     "astro": "^5.12.9",
+    "nanoid": "^5.1.5",
+    "preact": "^10.27.1",
     "tailwindcss": "^4.1.11"
   }
 }

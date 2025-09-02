@@ -1,0 +1,98 @@
+---
+import "../styles/global.css";
+import Intro from '../components/Intro.astro';
+import { TerminalAnimation } from '../components/TerminalAnimation';
+import { nanoid } from 'nanoid';
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Tekne" } = Astro.props as Props;
+const id = nanoid();
+---
+
+<!doctype html>
+<html lang="en" class="h-full antialiased dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <slot name="head" />
+  </head>
+  <body class="min-h-screen bg-white dark:bg-gray-950 lg:flex">
+    <!-- Left Sidebar -->
+    <div class="relative lg:w-128 lg:flex-shrink-0">
+      <!-- Background + Gradient -->
+      <div class="absolute inset-0 overflow-hidden bg-gray-950">
+        <svg
+          class="absolute -bottom-48 left-[-40%] h-320 w-[180%] lg:top-[-40%] lg:-right-40 lg:bottom-auto lg:left-auto lg:h-[180%] lg:w-7xl"
+          aria-hidden="true"
+        >
+          <defs>
+            <radialGradient id={`${id}-desktop`} cx="100%">
+              <stop offset="0%" stop-color="rgba(56, 189, 248, 0.3)" />
+              <stop offset="53.95%" stop-color="rgba(0, 71, 255, 0.09)" />
+              <stop offset="100%" stop-color="rgba(10, 14, 23, 0)" />
+            </radialGradient>
+            <radialGradient id={`${id}-mobile`} cy="100%">
+              <stop offset="0%" stop-color="rgba(56, 189, 248, 0.3)" />
+              <stop offset="53.95%" stop-color="rgba(0, 71, 255, 0.09)" />
+              <stop offset="100%" stop-color="rgba(10, 14, 23, 0)" />
+            </radialGradient>
+          </defs>
+          <rect
+            width="100%"
+            height="100%"
+            fill={`url(#${id}-desktop)`}
+            class="hidden lg:block"
+          />
+          <rect
+            width="100%"
+            height="100%"
+            fill={`url(#${id}-mobile)`}
+            class="lg:hidden"
+          />
+        </svg>
+        <div class="absolute inset-x-0 bottom-0 h-px bg-white mix-blend-overlay lg:inset-y-0 lg:right-0 lg:left-auto lg:h-auto lg:w-px"></div>
+      </div>
+      
+      <!-- Sidebar Content -->
+      <div class="relative flex flex-col min-h-[90vh] lg:min-h-full p-6 lg:py-8 z-20">
+        <div class="pt-14 pb-16 sm:pt-26 sm:pb-20 lg:pt-0 lg:pb-0">
+          <div class="relative backdrop-blur-sm rounded-lg p-6 lg:p-12">
+            <Intro />
+          </div>
+        </div>
+        
+        <!-- Terminal Animation as flex item -->
+        <div class="flex-1 relative min-h-32 my-6">
+          <TerminalAnimation client:load />
+        </div>
+        
+        <div class="flex items-end justify-center lg:justify-start pb-4  lg:px-12">
+          <p class="flex items-baseline text-[0.8125rem]/6 text-gray-500">
+            a project by
+            <a href="https://github.com/upvalue" class="group relative isolate flex items-center rounded-lg px-2 py-0.5 text-[0.8125rem]/6 font-medium text-white/30 transition-colors hover:text-sky-300 gap-x-2">
+              <span class="absolute inset-0 -z-10 scale-75 rounded-lg bg-white/5 opacity-0 transition group-hover:scale-100 group-hover:opacity-100"></span>
+              <span class="self-baseline text-white">upvalue.io</span>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 lg:overflow-y-auto">
+      <main class="space-y-20 py-20 sm:space-y-32 sm:py-20">
+        <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-none lg:px-6">
+          <div class="bg-gray-950/90 rounded-lg px-8">
+            <slot />
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

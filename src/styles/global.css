@@ -1,2 +1,13 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
+@import '@fontsource/mona-sans';
+@import '@fontsource/iosevka';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --text-2xs: 0.6875rem;
+  --font-display: 'Mona Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Iosevka', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+}
