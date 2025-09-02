@@ -1,23 +1,26 @@
 import { useEffect, useState } from 'preact/hooks';
 
 // Animation configuration constants
-const LOOP_ANIMATION = true;
+const LOOP_ANIMATION = false;
 const TYPING_SPEED = 50; // Base typing speed in milliseconds (lower = faster)
 
 // Data structure for terminal lines
 type TerminalObject =
   | { type: 'text', content: string }
   | { type: 'instant', content: string }
-  | { type: 'icon', icon: 'timer' };
+  | { type: 'icon', icon: 'timer' | 'check' };
 
 type TerminalLine = TerminalObject[];
 
 const TERMINAL_LINES: TerminalLine[] = [
   [{ type: 'text', content: '• #meditate' }],
-  [{ type: 'text', content: '\t• ' }, { type: 'icon', icon: 'timer' }, { type: 'instant', content: '10 minutes' }],
-  [{ type: 'text', content: '• #exercise' }],
-  [{ type: 'text', content: '• Mow the cat' }],
-  [{ type: 'text', content: '• Feed the lawn' }],
+  [{ type: 'text', content: '\t• ' }, { type: 'icon', icon: 'timer' }, { type: 'instant', content: '15m' }],
+  [{ type: 'text', content: '• ' }, { type: 'icon', icon: 'check' }, { type: 'text', content: '#exercise' }],
+  [{ type: 'text', content: '\t• ' }, { type: 'text', content: 'ran 93.7km' }],
+  [{ type: 'text', content: '\t• ' }, { type: 'text', content: '3 push ups' }],
+  [{ type: 'text', content: '• Later today' }],
+  [{ type: 'text', content: '\t• ' }, { type: 'text', content: 'water the cat' }],
+  [{ type: 'text', content: '\t• ' }, { type: 'text', content: 'feed the lawn' }],
 ];
 
 export function TerminalAnimation() {
@@ -30,9 +33,17 @@ export function TerminalAnimation() {
   // Helper function to render an icon
   const renderIcon = (iconType: string) => {
     switch (iconType) {
+      case 'check':
+        return (
+          <span className="px-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline w-4 h-4 text-blue-400">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+          </span>
+        )
       case 'timer':
         return (
-          <span className="pl-1">
+          <span className="px-0.5">
 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="inline w-4 h-4 text-blue-400">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -130,29 +141,33 @@ export function TerminalAnimation() {
       {/* Terminal text overlay */}
       <div className="p-4 text-blue-300 text-sm leading-relaxed opacity-30">
         <div className="font-mono">
-          {/* Rendered complete lines */}
-          {renderedLines.map((line, lineIdx) => (
-            <div key={lineIdx} className="flex items-center">
-              {line.map((obj, objIdx) => (
-                <pre key={objIdx}>
-                  {obj.type === 'text' || obj.type === 'instant' ? obj.content : renderIcon(obj.icon)}
-                </pre>
-              ))}
+          {/* All lines with fixed height */}
+          {TERMINAL_LINES.map((line, lineIdx) => (
+            <div key={lineIdx} className="flex items-center min-h-[1.5rem]">
+              {lineIdx < renderedLines.length ? (
+                // Completed line
+                renderedLines[lineIdx].map((obj, objIdx) => (
+                  <pre key={objIdx}>
+                    {obj.type === 'text' || obj.type === 'instant' ? obj.content : renderIcon(obj.icon)}
+                  </pre>
+                ))
+              ) : lineIdx === currentLineIndex ? (
+                // Currently typing line
+                <>
+                  {currentLineObjects.map((obj, objIdx) => (
+                    <pre key={objIdx}>
+                      {obj.type === 'text' || obj.type === 'instant' ? obj.content : renderIcon(obj.icon)}
+                    </pre>
+                  ))}
+                  <pre>{getCurrentPartialText()}</pre>
+                  <span className="animate-pulse">█</span>
+                </>
+              ) : (
+                // Future line - render as empty space
+                <pre>&nbsp;</pre>
+              )}
             </div>
           ))}
-
-          {/* Current line being typed */}
-          {currentLineIndex < TERMINAL_LINES.length && (
-            <div className="flex items-center">
-              {currentLineObjects.map((obj, objIdx) => (
-                <pre key={objIdx}>
-                  {obj.type === 'text' || obj.type === 'instant' ? obj.content : renderIcon(obj.icon)}
-                </pre>
-              ))}
-              <span>{getCurrentPartialText()}</span>
-              <span className="animate-pulse">█</span>
-            </div>
-          )}
         </div>
       </div>
     </div>

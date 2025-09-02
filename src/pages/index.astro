@@ -1,6 +1,11 @@
 ---
 import CommitLayout from '../layouts/CommitLayout.astro';
+import {Image} from 'astro:assets'
+
+import screenshot from '../assets/screenshot-1-data.png';
 ---
+
+
 
 <CommitLayout>
 	<article class="prose prose-invert max-w-none">
@@ -12,14 +17,26 @@ import CommitLayout from '../layouts/CommitLayout.astro';
 			Tekne is an freestyle productivity app in the shape of an outline editor.
 		</p>
 		
-		<h3 class="text-xl font-semibold text-white mb-4">Freeform data over time</h3>
+		<h3>Freeform data over time</h3>
+		
+			<Image class="rounded-xl" src={screenshot} alt="Screenshot of Tekne" width={500} height={200} />
+		
 		<p>
-			Tekne's core feature is that it allows you to track freeform data over time.
+			Tekne's core feature is that it allows you to track data over time in a free-form way.
 		</p>
 
 		<p>
-			Use this.
+			Tag data with <span class="font-mono">#tags</span> and get an aggregated view over time automatically.
 		</p>
+
+		<h3>Under construction</h3>
+		<p>
+			Tekne is alpha software that's changing on a weekly basis. 
+		</p>
+		<p>
+			The best place to learn more is the tutorial and documentation in the app.
+		</p>
+
 
 		<a href="https://demo.tekne.app" class="flex items-center text-sky-400 gap-x-2 no-underline">
 			Check out the demo
