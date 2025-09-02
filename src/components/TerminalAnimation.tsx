@@ -7,13 +7,14 @@ const TYPING_SPEED = 50; // Base typing speed in milliseconds (lower = faster)
 // Data structure for terminal lines
 type TerminalObject =
   | { type: 'text', content: string }
+  | { type: 'instant', content: string }
   | { type: 'icon', icon: 'timer' };
 
 type TerminalLine = TerminalObject[];
 
 const TERMINAL_LINES: TerminalLine[] = [
   [{ type: 'text', content: '• #meditate' }],
-  [{ type: 'text', content: '\t• ' }, { type: 'icon', icon: 'timer' }, { type: 'text', content: '10 minutes' }],
+  [{ type: 'text', content: '\t• ' }, { type: 'icon', icon: 'timer' }, { type: 'instant', content: '10 minutes' }],
   [{ type: 'text', content: '• #exercise' }],
   [{ type: 'text', content: '• Mow the cat' }],
   [{ type: 'text', content: '• Feed the lawn' }],
@@ -76,8 +77,8 @@ export function TerminalAnimation() {
 
     const currentObject = currentLine[currentObjectIndex];
 
-    if (currentObject.type === 'icon') {
-      // Add icon immediately and move to next object
+    if (currentObject.type === 'icon' || currentObject.type === 'instant') {
+      // Add icon or instant text immediately and move to next object
       const timer = setTimeout(() => {
         setCurrentLineObjects(prev => [...prev, currentObject]);
         setCurrentObjectIndex(prev => prev + 1);
@@ -111,7 +112,15 @@ export function TerminalAnimation() {
     if (currentObjectIndex >= currentLine.length) return '';
     const currentObject = currentLine[currentObjectIndex];
     if (currentObject.type === 'text') {
-      return currentObject.content.slice(0, currentCharIndex);
+      const content = currentObject.content;
+      // Check if line starts with bullet or tab - render those instantly
+      if (content.startsWith('• ') || content.startsWith('\t• ')) {
+        const prefix = content.startsWith('\t• ') ? '\t• ' : '• ';
+        const restContent = content.slice(prefix.length);
+        const typedRest = restContent.slice(0, Math.max(0, currentCharIndex - prefix.length));
+        return prefix + typedRest;
+      }
+      return content.slice(0, currentCharIndex);
     }
     return '';
   };
@@ -126,7 +135,7 @@ export function TerminalAnimation() {
             <div key={lineIdx} className="flex items-center">
               {line.map((obj, objIdx) => (
                 <pre key={objIdx}>
-                  {obj.type === 'text' ? obj.content : renderIcon(obj.icon)}
+                  {obj.type === 'text' || obj.type === 'instant' ? obj.content : renderIcon(obj.icon)}
                 </pre>
               ))}
             </div>
@@ -137,7 +146,7 @@ export function TerminalAnimation() {
             <div className="flex items-center">
               {currentLineObjects.map((obj, objIdx) => (
                 <pre key={objIdx}>
-                  {obj.type === 'text' ? obj.content : renderIcon(obj.icon)}
+                  {obj.type === 'text' || obj.type === 'instant' ? obj.content : renderIcon(obj.icon)}
                 </pre>
               ))}
               <span>{getCurrentPartialText()}</span>

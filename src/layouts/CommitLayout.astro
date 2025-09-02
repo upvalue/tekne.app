@@ -22,9 +22,9 @@ const id = nanoid();
     <title>{title}</title>
     <slot name="head" />
   </head>
-  <body class="min-h-screen bg-white dark:bg-gray-950 lg:flex">
+  <body class="min-h-screen bg-white dark:bg-gray-950 lg:flex lg:h-screen">
     <!-- Left Sidebar -->
-    <div class="relative lg:w-128 lg:flex-shrink-0">
+    <div class="relative lg:w-128 lg:flex-shrink-0 lg:h-full">
       <!-- Background + Gradient -->
       <div class="absolute inset-0 overflow-hidden bg-gray-950">
         <svg
@@ -61,14 +61,14 @@ const id = nanoid();
       
       <!-- Sidebar Content -->
       <div class="relative flex flex-col min-h-[90vh] lg:min-h-full p-6 lg:py-8 z-20">
-        <div class="pt-14 pb-16 sm:pt-26 sm:pb-20 lg:pt-0 lg:pb-0">
-          <div class="relative backdrop-blur-sm rounded-lg p-6 lg:p-12">
+        <div class="pt-8 pb-0 lg:pt-0 lg:pb-0">
+          <div class="relative backdrop-blur-sm rounded-lg p-6 lg:px-12 lg:py-6">
             <Intro />
           </div>
         </div>
         
         <!-- Terminal Animation as flex item -->
-        <div class="flex-1 relative min-h-32 my-6">
+        <div class="flex-1 relative lg:mx-12">
           <TerminalAnimation client:load />
         </div>
         
@@ -85,7 +85,7 @@ const id = nanoid();
     </div>
 
     <!-- Main Content Area -->
-    <div class="flex-1 lg:overflow-y-auto">
+    <div class="flex-1 lg:overflow-y-auto lg:h-full">
       <main class="space-y-20 py-20 sm:space-y-32 sm:py-20">
         <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-none lg:px-6">
           <div class="bg-gray-950/90 rounded-lg px-8">
