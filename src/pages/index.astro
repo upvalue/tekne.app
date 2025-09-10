@@ -2,7 +2,8 @@
 import CommitLayout from '../layouts/CommitLayout.astro';
 import {Image} from 'astro:assets'
 
-import screenshot from '../assets/screenshot-1-data.png';
+import tekneEditor from '../assets/tekne-editor.png';
+import tekneAggregate from '../assets/tekne-aggregate.png';
 ---
 
 
@@ -19,7 +20,7 @@ import screenshot from '../assets/screenshot-1-data.png';
 		
 		<h3>Freeform data over time</h3>
 		
-			<Image class="rounded-xl" src={screenshot} alt="Screenshot of Tekne" width={500} height={200} />
+		<Image class="rounded-xl mb-4" src={tekneEditor} alt="Tekne editor interface" />
 		
 		<p>
 			Tekne's core feature is that it allows you to track data over time in a free-form way.
@@ -28,6 +29,8 @@ import screenshot from '../assets/screenshot-1-data.png';
 		<p>
 			Tag data with <span class="font-mono">#tags</span> and get an aggregated view over time automatically.
 		</p>
+
+		<Image class="rounded-xl mt-4" src={tekneAggregate} alt="Tekne aggregated view" />
 
 		<h3>Under construction</h3>
 		<p>
