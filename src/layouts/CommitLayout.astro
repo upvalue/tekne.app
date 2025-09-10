@@ -21,6 +21,13 @@ const id = nanoid();
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/tekne180-sky.png" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Tekne" />
+    <meta property="og:description" content="A freestyle productivity app in the shape of an outline editor" />
+    <meta property="og:image" content="/assets/tekne-editor.png" />
+    <meta property="og:type" content="website" />
+    
     <slot name="head" />
   </head>
   <body class="min-h-screen bg-white dark:bg-gray-950 lg:flex lg:h-screen">
