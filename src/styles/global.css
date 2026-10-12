@@ -1,13 +1,44 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
-@import '@fontsource/mona-sans';
 @import '@fontsource/iosevka';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+  /* Same colors as the app (tekne src/styles/styles.css), from Zed's One Dark */
+  --color-page: #0b0e14;
+  --color-panel: #11151c;
+  --color-raised: #2c323c;
+  --color-mark: #464b57;
+  --color-text: #dce0e5;
+  --color-text-2: #a9afbc;
+  --color-muted: #878a98;
+  --color-accent: #74ade8;
+
   --text-2xs: 0.6875rem;
-  --font-display: 'Mona Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-sans: ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'Iosevka', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  --font-sans:
+    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  --font-mono: 'Iosevka', ui-monospace, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-page);
+  color: var(--color-text);
+}
+
+:focus-visible {
+  outline-color: var(--color-accent);
+}
+
+.prose {
+  --tw-prose-body: var(--color-text-2);
+  --tw-prose-headings: var(--color-text);
+  --tw-prose-bold: var(--color-text);
+  --tw-prose-links: var(--color-accent);
+  --tw-prose-code: var(--color-text);
 }
